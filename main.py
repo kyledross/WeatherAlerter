@@ -23,12 +23,16 @@ import Fetcher
 from LocationResolver import LocationResolver
 from Prioritizer import pick_most_important_warning
 
-location = LocationResolver.resolve_address("Callaway County, MO")
-fetcher = Fetcher.Fetcher(location[0], location[1])
-# data = fetcher.get_json_from_nws()
-# Fetcher.save_json_to_file(data, './Tests/TestData/multiple_warning_response.json')
-data = Fetcher.get_json_from_file('./Tests/TestData/multiple_warning_response.json')
-warnings = Fetcher.get_warnings(data, Fetcher.Utility.parse_time_to_utc('2024-06-13T21:58:00-05:00'))
-if warnings:
-    print(pick_most_important_warning(warnings).event)
+location = "Brooks, GA"
 
+
+def get_warnings() -> []:
+    location_coordinates = LocationResolver.resolve_address_with_cache(location)
+    fetcher = Fetcher.Fetcher(location_coordinates[0], location_coordinates[1])
+    data = fetcher.get_json_from_nws()
+    return Fetcher.get_warnings(data, Fetcher.Utility.current_time_utc())
+
+
+current_warnings = get_warnings()
+if current_warnings:
+    print(pick_most_important_warning(current_warnings).event)

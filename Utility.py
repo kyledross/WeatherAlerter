@@ -4,7 +4,7 @@ from dateutil.tz import tzutc
 
 
 def current_time_utc() -> datetime:
-    return datetime.utcnow().astimezone(tzutc())
+    return datetime.now(tzutc())
 
 
 def parse_time_to_utc(time_str: str) -> datetime:
