@@ -18,21 +18,33 @@
 
 # https://alerts.weather.gov/search
 
-
-import Fetcher
+import argparse
 from LocationResolver import LocationResolver
 from Prioritizer import pick_most_important_warning
+import Fetcher
 
-location = "Brooks, GA"
 
-
-def get_warnings() -> []:
-    location_coordinates = LocationResolver.resolve_address_with_cache(location)
-    fetcher = Fetcher.Fetcher(location_coordinates[0], location_coordinates[1])
-    data = fetcher.get_json_from_nws()
+def get_warnings_using_coordinates(location_coordinates) -> []:
+    fetcher = Fetcher.Fetcher()
+    data = fetcher.get_json_from_nws_using_coordinates(location_coordinates[0], location_coordinates[1])
     return Fetcher.get_warnings(data, Fetcher.Utility.current_time_utc())
 
 
-current_warnings = get_warnings()
-if current_warnings:
-    print(pick_most_important_warning(current_warnings).event)
+def get_warnings_using_same_code(same_code: str) -> []:
+    zone_id = LocationResolver.resolve_same_code_to_zone_id(same_code)
+    fetcher = Fetcher.Fetcher()
+    data = fetcher.get_json_from_nws_using_zone_id(zone_id)
+    return Fetcher.get_warnings(data, Fetcher.Utility.current_time_utc())
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description='Process location.')
+    parser.add_argument('--same', type=str, required=True, help='NWS SAME code to use')
+    args = parser.parse_args()
+    current_warnings = get_warnings_using_same_code(args.same)
+    if current_warnings:
+        print(pick_most_important_warning(current_warnings).event)
+
+
+if __name__ == "__main__":
+    main()

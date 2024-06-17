@@ -1,6 +1,7 @@
 import decimal
 import json
 import os
+import csv
 
 import requests
 
@@ -21,9 +22,16 @@ class LocationResolver:
                 latitude: decimal = data[0]['lat']
                 longitude: decimal = data[0]['lon']
                 return latitude, longitude
+            else:
+                raise ValueError(f'Location "{location}" not found.')
+        else:
+            raise ValueError(f'Failed to resolve location "{location}".')
 
     @staticmethod
     def resolve_address_with_cache(location) -> tuple[decimal, decimal]:
+        if not location or location == '':
+            raise ValueError('Location is required.  Ex: --location "New York, NY"')
+
         dir_path = os.path.expanduser('~/.WeatherAlerter')
         pathname = os.path.join(dir_path, 'location_cache.json')
         data = {}
@@ -49,3 +57,14 @@ class LocationResolver:
             json.dump(data, f, indent=4)
 
         return latitude, longitude
+
+    @staticmethod
+    def resolve_same_code_to_zone_id(same_code: str) -> str:
+        if same_code.startswith('0'):
+            same_code = same_code[1:]
+        path_to_data = "./data/bp05mr24.dbx.txt"
+        with open(path_to_data, 'r') as f:
+            reader = csv.reader(f, delimiter='|')
+            for row in reader:
+                if row[6] == same_code:
+                    return f"{row[0]}Z{row[1]}"

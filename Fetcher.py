@@ -40,13 +40,17 @@ def save_json_to_file(data: dict, pathname: str) -> None:
 
 class Fetcher:
 
-    def __init__(self, latitude: decimal, longitude: decimal):
-        self.longitude = longitude
-        self.latitude = latitude
-
-    def get_json_from_nws(self) -> dict:
+    def get_json_from_nws_using_coordinates(self, latitude: decimal, longitude: decimal) -> dict:
         # Construct the URL for the latitude and longitude
-        url = f"https://api.weather.gov/alerts/active?point={self.latitude},{self.longitude}"
+        url = f"https://api.weather.gov/alerts/active?point={latitude},{longitude}"
+        # Send a GET request to the URL
+        response = requests.get(url, headers={'User-Agent': 'weatheralerter.kyleross.com'})
+        # Parse the response content as JSON
+        return response.json()
+
+    def get_json_from_nws_using_zone_id(self, zone_id: str) -> dict:
+        # Construct the URL for the latitude and longitude
+        url = f"https://api.weather.gov/alerts/active/zone/{zone_id}"
         # Send a GET request to the URL
         response = requests.get(url, headers={'User-Agent': 'weatheralerter.kyleross.com'})
         # Parse the response content as JSON
