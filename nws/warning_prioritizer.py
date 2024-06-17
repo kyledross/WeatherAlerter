@@ -15,15 +15,12 @@ def pick_most_important_warning(warnings: [WeatherWarning]) -> Any | None:
     This function takes a list of WeatherWarning objects and returns the most important warning.
     The most important warning is determined by the severity and urgency of the warning.
     If two warnings have the same severity, the warning with the higher urgency is considered more important.
-    If two warnings have the same severity and urgency, the first warning in the list is returned.
+    If two warnings have the same severity and urgency, the warning that was effective last is considered more important.
 
     :param warnings: A list of WeatherWarning objects
     :return: The most important WeatherWarning object
     """
     if not warnings:
         return None
-    # Sort the warnings by severity and urgency
-    warnings.sort(key=lambda w: (Severity[w.severity], Urgency[w.urgency]))
-
-    # Return the last warning in the sorted list
+    warnings.sort(key=lambda x: (Severity[x.severity], Urgency[x.urgency], x.effective))
     return warnings[-1]
