@@ -24,7 +24,8 @@ def main() -> None:
     parser.add_argument('--same',
                         type=str,
                         required=True,
-                        help='NWS SAME code to use, for example --same 012345')
+                        help='NWS SAME code to use, for example --same 012345. A SAME code may be checked no more '
+                             'than once per minute.')
     parser.add_argument('--output',
                         type=str,
                         default='cli',
@@ -38,6 +39,9 @@ def main() -> None:
                              'notification, whereas the sensehat output type will display an exclamation point until '
                              'the program is run and there is no more alerts to display.')
     args = parser.parse_args()
+    if utility.is_throttled(args.same):
+        print(f"Too soon to check SAME code {args.same} again. Try again a little later.")
+        return
     current_warnings = get_warnings_using_same_code(args.same)
     output_device = DeviceFactory.create_device(args.output)
     if current_warnings:
