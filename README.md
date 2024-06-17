@@ -3,11 +3,11 @@ A Python-based weather alert utility.
 Copyright 2024 Kyle D. Ross  
 See LICENSE.md for licensing information
 
-### Warning  
+## Warning  
 
-This utility is for demonstration and learning purposes only, and is not intended to be your sole source of inclement weather information.
+This program is for demonstration and learning purposes only, and is not intended to be your sole source of inclement weather information.
 
-**_DO NOT RELY UPON THIS UTILITY FOR THE SAFETY OF ANYONE OR ANYTHING!_**
+**_DO NOT RELY UPON THIS PROGRAM FOR THE SAFETY OF ANYONE OR ANYTHING!_**
 
 ### Purpose  
 
