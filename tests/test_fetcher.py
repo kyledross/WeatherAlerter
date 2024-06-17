@@ -1,9 +1,9 @@
 import unittest
 from datetime import datetime, timezone
 
-import Prioritizer
-from Fetcher import Fetcher, get_warnings, get_json_from_file
-from WeatherWarning import WeatherWarning
+from nws.weather_warning import WeatherWarning
+from nws.nws_data_fetcher import Fetcher, get_json_from_file
+from nws.warning_prioritizer import pick_most_important_warning
 
 
 class TestFetcher(unittest.TestCase):
@@ -13,9 +13,9 @@ class TestFetcher(unittest.TestCase):
 
     def test_get_warning(self) -> None:
         current_time: datetime = datetime(2024, 6, 13, 20, 30, tzinfo=timezone.utc)
-        data = get_json_from_file('./TestData/single_warning_response.json')
+        data = get_json_from_file('test_data/single_warning_response.json')
         self.assertIsInstance(data, dict)
-        result = get_warnings(data, current_time)
+        result = Fetcher.get_warnings(data, current_time)
         self.assertIsInstance(result, list)
         self.assertEqual(len(result), 1)
         self.assertIsInstance(result[0], WeatherWarning)
@@ -26,21 +26,21 @@ class TestFetcher(unittest.TestCase):
 
     def test_get_expired_warning(self) -> None:
         current_time: datetime = datetime(2024, 6, 13, 22, 00, tzinfo=timezone.utc)
-        data = get_json_from_file('TestData/single_warning_response.json')
+        data = get_json_from_file('test_data/single_warning_response.json')
         self.assertIsInstance(data, dict)
-        result = get_warnings(data, current_time)
+        result = Fetcher.get_warnings(data, current_time)
         self.assertIsInstance(result, list)
         self.assertEqual(len(result), 0)
 
     def test_prioritizer_with_multiple_warnings(self) -> None:
         current_time: datetime = datetime(2024, 6, 14, 2, 58, tzinfo=timezone.utc)
-        data = get_json_from_file('./TestData/multiple_warning_response.json')
+        data = get_json_from_file('test_data/multiple_warning_response.json')
         self.assertIsInstance(data, dict)
-        result = get_warnings(data, current_time)
+        result = Fetcher.get_warnings(data, current_time)
         self.assertIsInstance(result, list)
         self.assertEqual(len(result), 3)
 
-        most_urgent = Prioritizer.pick_most_important_warning(result)
+        most_urgent = pick_most_important_warning(result)
         self.assertIsInstance(most_urgent, WeatherWarning)
 
         self.assertEqual(most_urgent.effective, datetime(2024, 6, 14, 2, 57, tzinfo=timezone.utc))

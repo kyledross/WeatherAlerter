@@ -1,5 +1,5 @@
 # implement base class for CLI devices
-from OutputDevices.BaseOutputDevice import BaseOutputDevice
+from output_devices.base_output_device import BaseOutputDevice
 
 
 class CLIDevice(BaseOutputDevice):

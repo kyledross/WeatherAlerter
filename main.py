@@ -8,23 +8,24 @@
 # https://alerts.weather.gov/search
 
 import argparse
-from LocationResolver import LocationResolver
-from OutputDevices import DeviceFactory
-from Prioritizer import pick_most_important_warning
-import Fetcher
+
+import utility
+from nws.nws_data_fetcher import Fetcher
+from nws.nws_location_resolver import LocationResolver
+from nws.warning_prioritizer import pick_most_important_warning
+from output_devices.device_factory import DeviceFactory
 
 
 def get_warnings_using_coordinates(location_coordinates) -> []:
-    fetcher = Fetcher.Fetcher()
+    fetcher = Fetcher()
     data = fetcher.get_json_from_nws_using_coordinates(location_coordinates[0], location_coordinates[1])
-    return Fetcher.get_warnings(data, Fetcher.Utility.current_time_utc())
+    return fetcher.get_warnings(data, utility.current_time_utc())
 
 
 def get_warnings_using_same_code(same_code: str) -> []:
     zone_id = LocationResolver.resolve_same_code_to_zone_id(same_code)
-    fetcher = Fetcher.Fetcher()
-    data = fetcher.get_json_from_nws_using_zone_id(zone_id)
-    return Fetcher.get_warnings(data, Fetcher.Utility.current_time_utc())
+    data = Fetcher.get_json_from_nws_using_zone_id(zone_id)
+    return Fetcher.get_warnings(data, utility.current_time_utc())
 
 
 def main() -> None:
@@ -43,7 +44,7 @@ def main() -> None:
                         help='Keep notification visible until it is no longer in effect, if supported by output')
     args = parser.parse_args()
     current_warnings = get_warnings_using_same_code(args.same)
-    output_device = DeviceFactory.DeviceFactory.create_device(args.output)
+    output_device = DeviceFactory.create_device(args.output)
     if current_warnings:
         most_important_warning = pick_most_important_warning(current_warnings)
         output_device.output(most_important_warning.event, args.persist_notification)

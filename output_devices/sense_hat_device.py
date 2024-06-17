@@ -1,6 +1,6 @@
 import importlib
 
-from OutputDevices.BaseOutputDevice import BaseOutputDevice
+from output_devices.base_output_device import BaseOutputDevice
 
 
 class SenseHatDevice(BaseOutputDevice):

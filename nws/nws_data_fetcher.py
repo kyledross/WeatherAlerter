@@ -4,27 +4,8 @@ from datetime import datetime
 
 import requests
 
-import Utility
-from WeatherWarning import WeatherWarning
-
-
-def get_warnings(data: dict, current_time: datetime) -> [WeatherWarning]:
-    # Create a list to store the warnings
-    warnings = []
-
-    # Iterate over the features in the data
-    for feature in data['features']:
-        # Check if the status is 'Actual' and the severity is 'Severe'
-        if feature['properties']['status'] == 'Actual' and feature['properties']['category'] == 'Met':
-            effective_time = Utility.parse_time_to_utc(feature['properties']['effective'])
-            expires_time = Utility.parse_time_to_utc(feature['properties']['expires'])
-            if effective_time <= current_time < expires_time:
-                event = feature['properties']['event']
-                urgency = feature['properties']['urgency']
-                severity = feature['properties']['severity']
-                warnings.append(WeatherWarning(effective_time, expires_time, event, urgency, severity))
-
-    return warnings
+import utility
+from weather_warning import WeatherWarning
 
 
 def get_json_from_file(pathname: str) -> dict:
@@ -57,3 +38,22 @@ class Fetcher:
         response = requests.get(url, headers={'User-Agent': 'weatheralerter.kyleross.com'})
         # Parse the response content as JSON
         return response.json()
+
+    @staticmethod
+    def get_warnings(data: dict, current_time: datetime) -> [WeatherWarning]:
+        # Create a list to store the warnings
+        warnings = []
+
+        # Iterate over the features in the data
+        for feature in data['features']:
+            # Check if the status is 'Actual' and the severity is 'Severe'
+            if feature['properties']['status'] == 'Actual' and feature['properties']['category'] == 'Met':
+                effective_time = utility.parse_time_to_utc(feature['properties']['effective'])
+                expires_time = utility.parse_time_to_utc(feature['properties']['expires'])
+                if effective_time <= current_time < expires_time:
+                    event = feature['properties']['event']
+                    urgency = feature['properties']['urgency']
+                    severity = feature['properties']['severity']
+                    warnings.append(WeatherWarning(effective_time, expires_time, event, urgency, severity))
+
+        return warnings

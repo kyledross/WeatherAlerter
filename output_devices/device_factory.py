@@ -1,5 +1,5 @@
-from OutputDevices.CLIDevice import CLIDevice
-from OutputDevices.SenseHatDevice import SenseHatDevice
+from output_devices.cli_device import CLIDevice
+from output_devices.sense_hat_device import SenseHatDevice
 
 
 class DeviceFactory:
