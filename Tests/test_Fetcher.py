@@ -9,7 +9,7 @@ from WeatherWarning import WeatherWarning
 class TestFetcher(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.fetcher = Fetcher(0, 0)
+        self.fetcher = Fetcher()
 
     def test_get_warning(self) -> None:
         current_time: datetime = datetime(2024, 6, 13, 20, 30, tzinfo=timezone.utc)
