@@ -6,8 +6,8 @@ Alerts are sorted by severity first, then by urgency.
 """
 from typing import Any
 
-from nws_enums import Severity, Urgency
-from weather_warning import WeatherWarning
+from nws.nws_enums import Severity, Urgency
+from nws.weather_warning import WeatherWarning
 
 
 def pick_most_important_warning(warnings: [WeatherWarning]) -> Any | None:

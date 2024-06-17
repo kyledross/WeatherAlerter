@@ -1,4 +1,3 @@
-# implement base class for CLI devices
 from output_devices.base_output_device import BaseOutputDevice
 
 

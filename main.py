@@ -1,12 +1,3 @@
-# sudo apt-get install sense-hat
-# sudo apt-get install libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-3.0
-# pip install PyGObject
-
-#
-
-
-# https://alerts.weather.gov/search
-
 import argparse
 
 import utility
@@ -33,15 +24,19 @@ def main() -> None:
     parser.add_argument('--same',
                         type=str,
                         required=True,
-                        help='NWS SAME code to use')
+                        help='NWS SAME code to use, for example --same 012345')
     parser.add_argument('--output',
                         type=str,
                         default='cli',
                         choices=['cli', 'sensehat'],
-                        help='Output method to use')
+                        help='Output method to use. If no output is specified, cli will be used. SenseHAT refers to '
+                             'a Raspberry Pi with a Sense HAT device attached.')
     parser.add_argument('--persist-notification',
                         action='store_true',
-                        help='Keep notification visible until it is no longer in effect, if supported by output')
+                        help='Keep notification visible until it is no longer in effect. This behavior is dependent '
+                             'on the chosen output type. For example, the cli output type does not persist any '
+                             'notification, whereas the sensehat output type will display an exclamation point until '
+                             'the program is run and there is no more alerts to display.')
     args = parser.parse_args()
     current_warnings = get_warnings_using_same_code(args.same)
     output_device = DeviceFactory.create_device(args.output)

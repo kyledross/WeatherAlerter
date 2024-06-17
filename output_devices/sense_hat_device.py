@@ -1,3 +1,7 @@
+# sudo apt-get install sense-hat
+# sudo apt-get install libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-3.0
+# pip install PyGObject
+
 import importlib
 
 from output_devices.base_output_device import BaseOutputDevice

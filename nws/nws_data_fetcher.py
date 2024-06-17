@@ -5,7 +5,7 @@ from datetime import datetime
 import requests
 
 import utility
-from weather_warning import WeatherWarning
+from nws.weather_warning import WeatherWarning
 
 
 def get_json_from_file(pathname: str) -> dict:
