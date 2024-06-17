@@ -1,6 +1,6 @@
-# sudo apt-get install sense-hat
-# sudo apt-get install libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-3.0
 # pip install PyGObject
+# If using Sense HAT: pip install sense-hat
+# If using Sense HAT Emulator: pip install sense-emu
 
 import importlib
 
