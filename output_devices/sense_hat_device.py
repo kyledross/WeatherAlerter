@@ -32,7 +32,7 @@ class SenseHatDevice(BaseOutputDevice):
             is_raspberry_pi = True
         except ModuleNotFoundError:
             sense = importlib.import_module('sense_emu')
-        return is_raspberry_pi, sense
+        return is_raspberry_pi, sense.SenseHat()
 
     def set_notification(self) -> None:
         """
