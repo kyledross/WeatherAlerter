@@ -2,6 +2,7 @@ from enum import IntEnum
 
 
 class Urgency(IntEnum):
+    Unknown = -1
     Past = 0
     Future = 1
     Expected = 2
