@@ -21,8 +21,19 @@ The purpose of this program is to:
 - An internet connection
 
 ### Optional
-- Raspberry Pi Sense HAT
+- Raspberry Pi Sense HAT  
+pip install sense-hat  or  pip install sense-emu if using the emulator  
+pip install PyGObject
 
 ### Usage
 For usage information:  
 **_python3 main.py --help_**
+
+### Credits
+#### Zone-County Correlation File (./Data/bp05mr24.dbx.txt)
+This file contains the zone-county correlation data for the US, and was obtained from:  
+US Dept of Commerce  
+National Oceanic and Atmospheric Administration  
+National Weather Service  
+GIS  
+https://www.weather.gov/gis/ZoneCounty
