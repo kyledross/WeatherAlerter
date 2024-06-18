@@ -21,9 +21,22 @@ The purpose of this program is to:
 - An internet connection
 
 ### Optional
-- Raspberry Pi Sense HAT  
-pip install sense-hat  or  pip install sense-emu if using the emulator  
-pip install PyGObject
+- Raspberry Pi Sense HAT
+
+### Setup
+1. Clone the repository
+2. CD into the repository
+3. sudo apt install python3-dateutil
+4. sudo apt install python3-requests
+
+
+#### Additional Setup for Raspberry Pi Sense HAT
+1. Enable the I2C interface on the Raspberry Pi
+2. sudo apt install python3-sense-hat
+
+#### Additional Setup for Raspberry Pi Sense HAT Emulator
+1. sudo apt install python3-sense-emu
+2. sudo apt install python3-PyGObject
 
 ### Usage
 For usage information:  
