@@ -20,7 +20,7 @@ class SenseHatDevice(BaseOutputDevice):
 
         if is_raspberry_pi:
             sense.set_rotation(180)
-        sense.show_message(output_string, text_colour=[255, 0, 0])
+        sense.show_message(output_string, text_colour=[255, 0, 0], scroll_speed=0.08)
         if persist_notification:
             self.set_notification()
 
