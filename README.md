@@ -31,7 +31,7 @@ The purpose of this program is to:
 
 
 #### Additional Setup for Raspberry Pi Sense HAT
-1. Enable the I2C interface on the Raspberry Pi
+1. Enable the I2C interface on the Raspberry Pi using sudo raspi-config
 2. sudo apt install python3-sense-hat
 
 #### Additional Setup for Raspberry Pi Sense HAT Emulator
