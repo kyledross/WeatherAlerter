@@ -24,23 +24,33 @@ The purpose of this program is to:
 - Raspberry Pi Sense HAT
 
 ### Setup
-1. Clone the repository
-2. CD into the repository
-3. sudo apt install python3-dateutil
-4. sudo apt install python3-requests
+```commandline
+sudo apt install python3-dateutil
+sudo apt install python3-requests
+git clone https://github.com/kyledross/WeatherAlerter
+cd WeatherAlerter
+```
+
 
 
 #### Additional Setup for Raspberry Pi Sense HAT
-1. Enable the I2C interface on the Raspberry Pi using sudo raspi-config
-2. sudo apt install python3-sense-hat
+Enable the I2C interface on the Raspberry Pi using 
+```commandline
+sudo raspi-config
+sudo apt install python3-sense-hat
+```
 
 #### Additional Setup for Raspberry Pi Sense HAT Emulator
-1. sudo apt install python3-sense-emu
-2. sudo apt install python3-PyGObject
+```commandline
+sudo apt install python3-sense-emu
+sudo apt install python3-PyGObject
+```
 
 ### Usage
-For usage information:  
-**_python3 main.py --help_**
+For usage information:
+```commandline
+python3 main.py --help
+```
 
 ### Credits
 #### Zone-County Correlation File (./Data/bp05mr24.dbx.txt)
